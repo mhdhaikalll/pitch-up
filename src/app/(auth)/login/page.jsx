@@ -223,7 +223,7 @@ export default function LoginPage() {
                         </p>
                         <div className="space-y-2 text-xs">
                             <div className="flex justify-between items-center p-2 bg-background rounded hover:bg-muted/50 cursor-pointer transition-colors"
-                                onClick={() => { setEmail("admin@uitm.edu.my"); setPassword("admin123"); }}>
+                                onClick={() => { setEmail("admin@test.com"); setPassword("admin"); }}>
                                 <span className="font-medium text-foreground">Admin</span>
                                 <code className="text-muted-foreground">admin@test.com / admin</code>
                             </div>
