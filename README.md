@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pitch-Up
+
+A startup pitch platform connecting students, investors, and administrators. Built with Next.js 15 and shadcn/ui.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Test Accounts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@test.com | admin |
+| Student | student@test.com | student |
+| Investor | investor@test.com | investor |
 
-## Learn More
+## Directory Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/
+│   ├── (auth)/                    # Authentication pages
+│   │   ├── login/
+│   │   ├── register/
+│   │   └── layout.jsx
+│   ├── (root)/                    # Main app pages (with sidebar)
+│   │   ├── admin/
+│   │   │   ├── dashboard/
+│   │   │   ├── user-management/
+│   │   │   └── startups-management/
+│   │   ├── student/
+│   │   │   ├── profile/
+│   │   │   ├── messages/
+│   │   │   └── view-status/
+│   │   └── investor/
+│   │       ├── view-startup/
+│   │       ├── investment/
+│   │       ├── mentorship/
+│   │       └── messages/
+│   ├── globals.css
+│   └── layout.js
+├── components/
+│   ├── ui/                        # shadcn/ui components
+│   └── main-sidebar.jsx           # Reusable sidebar component
+├── data/
+│   └── sidebarData.js             # Navigation data for each role
+├── hooks/
+│   └── use-mobile.js
+└── lib/
+    └── utils.js
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS
+- **Components**: shadcn/ui
+- **Charts**: Recharts
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
