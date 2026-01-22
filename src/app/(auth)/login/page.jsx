@@ -217,7 +217,7 @@ export default function LoginPage() {
                     </p>
 
                     {/* Test Accounts Info */}
-                    {/* <div className="mt-6 p-4 bg-muted/50 rounded-lg border border-dashed">
+                    <div className="mt-6 p-4 bg-muted/50 rounded-lg border border-dashed">
                         <p className="text-xs font-medium text-muted-foreground mb-3 text-center">
                             🧪 Test Accounts (Prototype)
                         </p>
@@ -241,7 +241,7 @@ export default function LoginPage() {
                         <p className="text-[10px] text-muted-foreground mt-2 text-center">
                             Click on any account to auto-fill credentials
                         </p>
-                    </div> */}
+                    </div>
                 </CardContent>
             </Card>
         </div>
