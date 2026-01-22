@@ -142,20 +142,26 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="p-4 sm:p-6 space-y-6">
+            {/* Page Header */}
+            <div className="space-y-1">
+                <h1 className="text-2xl font-bold tracking-tight">My Profile</h1>
+                <p className="text-sm text-muted-foreground">Manage your profile and startup information.</p>
+            </div>
+
             {/* Main Profile Card */}
-            <Card className="bg-muted/50">
-                <CardContent className="p-6">
+            <Card className="border">
+                <CardContent className="p-5 sm:p-6">
                     <div className="flex flex-col md:flex-row gap-6">
                         {/* Profile Picture & Basic Info */}
                         <div className="flex flex-col items-center md:items-start gap-4">
-                            <Avatar className="h-32 w-32 border-4 border-background shadow-lg">
+                            <Avatar className="h-28 w-28 sm:h-32 sm:w-32 border-4 border-background shadow-lg ring-2 ring-uitm-teal/20">
                                 <AvatarImage src={studentData.avatar} alt={studentData.name} />
-                                <AvatarFallback className="text-3xl">
+                                <AvatarFallback className="text-2xl sm:text-3xl bg-uitm-teal text-white">
                                     {studentData.name.split(' ').map(n => n[0]).join('')}
                                 </AvatarFallback>
                             </Avatar>
-                            <Button variant="outline" size="sm" className="gap-2">
+                            <Button variant="outline" size="sm" className="gap-2 hover:border-uitm-teal hover:text-uitm-teal transition-colors">
                                 <Pencil className="h-4 w-4" />
                                 Edit Profile
                             </Button>
@@ -164,16 +170,16 @@ export default function ProfilePage() {
                         {/* Profile Details */}
                         <div className="flex-1 space-y-4">
                             <div>
-                                <h1 className="text-2xl font-bold">{studentData.name}</h1>
+                                <h2 className="text-xl sm:text-2xl font-bold tracking-tight">{studentData.name}</h2>
                                 <p className="text-muted-foreground">{studentData.course}</p>
                             </div>
 
-                            <p className="text-sm text-muted-foreground">{studentData.bio}</p>
+                            <p className="text-sm text-muted-foreground leading-relaxed">{studentData.bio}</p>
 
                             {/* Skills */}
                             <div className="flex flex-wrap gap-2">
                                 {studentData.skills.map((skill, index) => (
-                                    <Badge key={index} variant="secondary">
+                                    <Badge key={index} variant="secondary" className="font-medium">
                                         {skill}
                                     </Badge>
                                 ))}
@@ -183,49 +189,51 @@ export default function ProfilePage() {
                 </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                 {/* Academic Information */}
-                <Card className="bg-muted/50">
+                <Card className="border">
                     <CardHeader className="pb-4">
                         <CardTitle className="text-lg flex items-center gap-2">
-                            <GraduationCap className="h-5 w-5 text-uitm-teal" />
+                            <div className="h-8 w-8 rounded-lg bg-uitm-teal/10 flex items-center justify-center">
+                                <GraduationCap className="h-4 w-4 text-uitm-teal" />
+                            </div>
                             Academic Information
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <Building2 className="h-5 w-5 text-muted-foreground" />
-                            <div>
+                            <Building2 className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">University</p>
-                                <p className="font-medium">{studentData.university}</p>
+                                <p className="font-medium truncate">{studentData.university}</p>
                             </div>
                         </div>
 
                         <Separator />
 
                         <div className="flex items-center gap-3">
-                            <MapPin className="h-5 w-5 text-muted-foreground" />
-                            <div>
+                            <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">Location</p>
-                                <p className="font-medium">{studentData.location}</p>
+                                <p className="font-medium truncate">{studentData.location}</p>
                             </div>
                         </div>
 
                         <Separator />
 
                         <div className="flex items-center gap-3">
-                            <BookOpen className="h-5 w-5 text-muted-foreground" />
-                            <div>
+                            <BookOpen className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">Course</p>
-                                <p className="font-medium">{studentData.course}</p>
+                                <p className="font-medium truncate">{studentData.course}</p>
                             </div>
                         </div>
 
                         <Separator />
 
                         <div className="flex items-center gap-3">
-                            <Calendar className="h-5 w-5 text-muted-foreground" />
-                            <div>
+                            <Calendar className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">Semester</p>
                                 <p className="font-medium">{studentData.semester}</p>
                             </div>
@@ -234,8 +242,8 @@ export default function ProfilePage() {
                         <Separator />
 
                         <div className="flex items-center gap-3">
-                            <GraduationCap className="h-5 w-5 text-muted-foreground" />
-                            <div>
+                            <GraduationCap className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">Expected Graduation</p>
                                 <p className="font-medium">{studentData.expectedGraduation}</p>
                             </div>
@@ -244,8 +252,8 @@ export default function ProfilePage() {
                         <Separator />
 
                         <div className="flex items-center gap-3">
-                            <BookOpen className="h-5 w-5 text-muted-foreground" />
-                            <div>
+                            <BookOpen className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">GPA</p>
                                 <p className="font-medium">{studentData.gpa} / 4.00</p>
                             </div>
@@ -254,27 +262,29 @@ export default function ProfilePage() {
                 </Card>
 
                 {/* Contact Information */}
-                <Card className="bg-muted/50">
+                <Card className="border">
                     <CardHeader className="pb-4">
                         <CardTitle className="text-lg flex items-center gap-2">
-                            <Mail className="h-5 w-5 text-green-500" />
+                            <div className="h-8 w-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                                <Mail className="h-4 w-4 text-emerald-500" />
+                            </div>
                             Contact Information
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <Mail className="h-5 w-5 text-muted-foreground" />
-                            <div>
+                            <Mail className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">Email Address</p>
-                                <p className="font-medium">{studentData.email}</p>
+                                <p className="font-medium truncate">{studentData.email}</p>
                             </div>
                         </div>
 
                         <Separator />
 
                         <div className="flex items-center gap-3">
-                            <Phone className="h-5 w-5 text-muted-foreground" />
-                            <div>
+                            <Phone className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">Phone Number</p>
                                 <p className="font-medium">{studentData.phone}</p>
                             </div>
@@ -283,10 +293,12 @@ export default function ProfilePage() {
                 </Card>
 
                 {/* Startup Group Information */}
-                <Card className="bg-muted/50 lg:col-span-2">
+                <Card className="border lg:col-span-2">
                     <CardHeader className="pb-4">
                         <CardTitle className="text-lg flex items-center gap-2">
-                            <Rocket className="h-5 w-5 text-orange-500" />
+                            <div className="h-8 w-8 rounded-lg bg-orange-500/10 flex items-center justify-center">
+                                <Rocket className="h-4 w-4 text-orange-500" />
+                            </div>
                             Startup Group
                         </CardTitle>
                     </CardHeader>
@@ -294,13 +306,13 @@ export default function ProfilePage() {
                         <div className="flex flex-col md:flex-row gap-6">
                             <div className="flex-1 space-y-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                                    <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-uitm-teal to-uitm-teal-dark flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-uitm-teal/20">
                                         TN
                                     </div>
                                     <div>
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 flex-wrap">
                                             <h3 className="font-semibold text-lg">{studentData.startupGroup.name}</h3>
-                                            <Badge className="bg-uitm-gold/10 text-uitm-gold-dark">
+                                            <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-0">
                                                 {studentData.startupGroup.status}
                                             </Badge>
                                         </div>
@@ -308,7 +320,7 @@ export default function ProfilePage() {
                                     </div>
                                 </div>
 
-                                <p className="text-sm text-muted-foreground">
+                                <p className="text-sm text-muted-foreground leading-relaxed">
                                     {studentData.startupGroup.description}
                                 </p>
 
@@ -316,7 +328,7 @@ export default function ProfilePage() {
                                     <Users className="h-4 w-4" />
                                     <Button 
                                         variant="link" 
-                                        className="p-0 h-auto text-muted-foreground hover:text-primary"
+                                        className="p-0 h-auto text-muted-foreground hover:text-uitm-teal"
                                         onClick={() => setTeamMembersOpen(true)}
                                     >
                                         {studentData.startupGroup.members} Team Members
@@ -327,7 +339,7 @@ export default function ProfilePage() {
                             <div className="flex md:flex-col gap-2">
                                 <Button 
                                     variant="outline" 
-                                    className="flex-1"
+                                    className="flex-1 hover:border-uitm-teal hover:text-uitm-teal transition-colors"
                                     onClick={() => setViewStartupOpen(true)}
                                 >
                                     View Startup

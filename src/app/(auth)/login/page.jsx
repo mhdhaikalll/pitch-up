@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,16 +9,67 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+
+// Test accounts for prototype demonstration
+const TEST_ACCOUNTS = [
+    {
+        email: "admin@test.com",
+        password: "admin",
+        role: "admin",
+        redirect: "/admin/dashboard",
+        name: "Admin User"
+    },
+    {
+        email: "student@test.com",
+        password: "student",
+        role: "student",
+        redirect: "/student/profile",
+        name: "Student User"
+    },
+    {
+        email: "investor@test.com",
+        password: "investor",
+        role: "investor",
+        redirect: "/investor/view-startup",
+        name: "Investor User"
+    }
+]
 
 export default function LoginPage() {
+    const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [rememberMe, setRememberMe] = useState(false)
+    const [error, setError] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleLogin = (e) => {
         e.preventDefault()
-        console.log("Login attempt:", { email, password, rememberMe })
-        // In a real app, this would authenticate with the backend
+        setError("")
+        setIsLoading(true)
+
+        // Find matching test account
+        const account = TEST_ACCOUNTS.find(
+            acc => acc.email.toLowerCase() === email.toLowerCase() && acc.password === password
+        )
+
+        // Simulate network delay for realism
+        setTimeout(() => {
+            if (account) {
+                // Store user info in localStorage for prototype
+                localStorage.setItem("user", JSON.stringify({
+                    email: account.email,
+                    name: account.name,
+                    role: account.role
+                }))
+                // Redirect to appropriate dashboard
+                router.push(account.redirect)
+            } else {
+                setError("Invalid email or password. Please use one of the test accounts below.")
+                setIsLoading(false)
+            }
+        }, 800)
     }
 
     const handleGoogleSignIn = () => {
@@ -26,44 +78,55 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-muted/50 p-4">
-            <Card className="w-full max-w-md shadow-lg">
-                <CardContent className="p-8">
+        <div className="min-h-screen flex items-center justify-center bg-muted/50 p-4 sm:p-6 lg:p-8">
+            <Card className="w-full max-w-[420px] shadow-xl border-0 bg-card/95 backdrop-blur-sm">
+                <CardContent className="p-6 sm:p-8">
                     {/* Header */}
-                    <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-foreground mb-2">
-                            WELCOME BACK!
+                    <div className="text-center mb-6">
+                        <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 tracking-tight">
+                            Welcome Back!
                         </h1>
-                        <p className="text-sm text-muted-foreground">
-                            Enter your email and password to access your account
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                            Enter your credentials to access your account
                         </p>
                     </div>
 
                     {/* Login Form */}
-                    <form onSubmit={handleLogin} className="space-y-5">
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
+                    <form onSubmit={handleLogin} className="space-y-4">
+                        {/* Error Message */}
+                        {error && (
+                            <Alert variant="destructive" className="border-red-200 bg-red-50 text-red-700 py-3">
+                                <AlertDescription className="text-sm">{error}</AlertDescription>
+                            </Alert>
+                        )}
+
+                        <div className="space-y-1.5">
+                            <Label htmlFor="email" className="text-sm font-medium">Email</Label>
                             <Input
                                 id="email"
                                 type="email"
-                                placeholder="Enter your email"
+                                placeholder="you@example.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="h-11"
+                                className="h-11 transition-all focus:ring-2 focus:ring-uitm-teal/20 focus:border-uitm-teal"
                                 required
+                                disabled={isLoading}
+                                autoComplete="email"
                             />
                         </div>
 
-                        <div className="space-y-2">
-                            <Label htmlFor="password">Password</Label>
+                        <div className="space-y-1.5">
+                            <Label htmlFor="password" className="text-sm font-medium">Password</Label>
                             <Input
                                 id="password"
                                 type="password"
-                                placeholder="Enter your password"
+                                placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="h-11"
+                                className="h-11 transition-all focus:ring-2 focus:ring-uitm-teal/20 focus:border-uitm-teal"
                                 required
+                                disabled={isLoading}
+                                autoComplete="current-password"
                             />
                         </div>
 
@@ -74,6 +137,7 @@ export default function LoginPage() {
                                     id="remember" 
                                     checked={rememberMe}
                                     onCheckedChange={(checked) => setRememberMe(checked)}
+                                    disabled={isLoading}
                                 />
                                 <Label htmlFor="remember" className="text-sm font-normal cursor-pointer">
                                     Remember Me
@@ -90,16 +154,25 @@ export default function LoginPage() {
                         {/* Login Button */}
                         <Button 
                             type="submit" 
-                            className="w-full h-11 bg-uitm-teal hover:bg-uitm-teal-dark text-white font-medium"
+                            className="w-full h-11 bg-uitm-teal hover:bg-uitm-teal-dark text-white font-medium transition-all duration-200 hover:shadow-lg hover:shadow-uitm-teal/25 active:scale-[0.98] mt-2"
+                            disabled={isLoading}
                         >
-                            Log In
+                            {isLoading ? (
+                                <span className="flex items-center gap-2">
+                                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                    </svg>
+                                    Signing in...
+                                </span>
+                            ) : "Sign In"}
                         </Button>
                     </form>
 
                     {/* Divider */}
-                    <div className="flex items-center gap-4 my-6">
+                    <div className="flex items-center gap-4 my-5">
                         <Separator className="flex-1" />
-                        <span className="text-sm text-muted-foreground">or</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-wide">or continue with</span>
                         <Separator className="flex-1" />
                     </div>
 
@@ -107,8 +180,9 @@ export default function LoginPage() {
                     <Button 
                         type="button"
                         variant="outline"
-                        className="w-full h-11 border-uitm-teal text-uitm-teal hover:bg-uitm-teal/10 font-medium"
+                        className="w-full h-11 border-border hover:border-uitm-teal text-foreground hover:text-uitm-teal hover:bg-uitm-teal/5 font-medium transition-all duration-200"
                         onClick={handleGoogleSignIn}
+                        disabled={isLoading}
                     >
                         <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                             <path
@@ -133,14 +207,41 @@ export default function LoginPage() {
 
                     {/* Sign Up Link */}
                     <p className="text-center text-sm text-muted-foreground mt-6">
-                        Don`t have an account?{" "}
+                        Don't have an account?{" "}
                         <Link 
                             href="/register" 
-                            className="text-uitm-teal hover:underline font-medium"
+                            className="text-uitm-teal hover:text-uitm-teal-dark font-semibold transition-colors"
                         >
-                            Sign Up
+                            Create one
                         </Link>
                     </p>
+
+                    {/* Test Accounts Info */}
+                    {/* <div className="mt-6 p-4 bg-muted/50 rounded-lg border border-dashed">
+                        <p className="text-xs font-medium text-muted-foreground mb-3 text-center">
+                            🧪 Test Accounts (Prototype)
+                        </p>
+                        <div className="space-y-2 text-xs">
+                            <div className="flex justify-between items-center p-2 bg-background rounded hover:bg-muted/50 cursor-pointer transition-colors"
+                                onClick={() => { setEmail("admin@uitm.edu.my"); setPassword("admin123"); }}>
+                                <span className="font-medium text-foreground">Admin</span>
+                                <code className="text-muted-foreground">admin@test.com / admin</code>
+                            </div>
+                            <div className="flex justify-between items-center p-2 bg-background rounded hover:bg-muted/50 cursor-pointer transition-colors"
+                                onClick={() => { setEmail("student@test.com"); setPassword("student"); }}>
+                                <span className="font-medium text-foreground">Student</span>
+                                <code className="text-muted-foreground">student@test.com / student</code>
+                            </div>
+                            <div className="flex justify-between items-center p-2 bg-background rounded hover:bg-muted/50 cursor-pointer transition-colors"
+                                onClick={() => { setEmail("investor@test.com"); setPassword("investor"); }}>
+                                <span className="font-medium text-foreground">Investor</span>
+                                <code className="text-muted-foreground">investor@test.com / investor</code>
+                            </div>
+                        </div>
+                        <p className="text-[10px] text-muted-foreground mt-2 text-center">
+                            Click on any account to auto-fill credentials
+                        </p>
+                    </div> */}
                 </CardContent>
             </Card>
         </div>

@@ -75,63 +75,58 @@ const InvestmentPage = () => {
     }
 
     return (
-        <div className="p-4">
-            <ScrollArea className="h-[calc(100vh-120px)]">
+        <div className="p-4 sm:p-6">
+            {/* Page Header */}
+            <div className="mb-6 space-y-1">
+                <h1 className="text-2xl font-bold tracking-tight">Browse Startups</h1>
+                <p className="text-sm text-muted-foreground">Discover innovative startups and investment opportunities.</p>
+            </div>
+
+            <ScrollArea className="h-[calc(100vh-180px)]">
                 <div className="space-y-4 pr-4">
                     {startupsData.map((startup) => (
-                        <Card key={startup.id} className="bg-muted/50 overflow-hidden">
+                        <Card key={startup.id} className="overflow-hidden border hover:shadow-lg transition-all duration-200 group">
                             <CardContent className="p-0">
                                 <div className="flex flex-col md:flex-row">
                                     {/* Image */}
-                                    <div className="md:w-1/4 aspect-video md:aspect-[4/3] relative bg-muted">
+                                    <div className="md:w-1/4 aspect-video md:aspect-[4/3] relative bg-muted overflow-hidden">
                                         <img
                                             src={startup.image}
                                             alt={startup.name}
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                                         />
-                                        {/* X pattern overlay for wireframe style */}
-                                        <div className="absolute inset-0 hidden">
-                                            <svg className="w-full h-full" preserveAspectRatio="none">
-                                                <line x1="0" y1="0" x2="100%" y2="100%" stroke="#666" strokeWidth="1" />
-                                                <line x1="100%" y1="0" x2="0" y2="100%" stroke="#666" strokeWidth="1" />
-                                            </svg>
-                                        </div>
                                     </div>
 
                                     {/* Content */}
-                                    <div className="md:w-3/4 p-4 flex flex-col">
-                                        <div className="flex-1">
-                                            <h3 className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">
-                                                Startup Name
-                                            </h3>
-                                            <h2 className="text-lg font-bold mb-2">{startup.name}</h2>
+                                    <div className="md:w-3/4 p-4 sm:p-5 flex flex-col">
+                                        <div className="flex-1 space-y-3">
+                                            <div>
+                                                <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">
+                                                    Startup
+                                                </p>
+                                                <h2 className="text-lg font-bold tracking-tight">{startup.name}</h2>
+                                            </div>
 
-                                            <h3 className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">
-                                                Description
-                                            </h3>
-                                            <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
+                                            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
                                                 {startup.description}
                                             </p>
 
-                                            <h3 className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
-                                                Area of Industry
-                                            </h3>
-                                            <div className="flex flex-wrap gap-1.5 mb-2">
+                                            <div className="flex flex-wrap gap-1.5">
                                                 {startup.industries.map((industry, index) => (
-                                                    <Badge key={index} variant="secondary" className="text-xs">
+                                                    <Badge key={index} variant="secondary" className="text-xs font-medium">
                                                         {industry}
                                                     </Badge>
                                                 ))}
                                             </div>
                                         </div>
 
-                                        <div className="flex justify-end">
+                                        <div className="flex justify-end mt-4">
                                             <Button
                                                 size="sm"
-                                                className="bg-uitm-teal hover:bg-uitm-teal-dark text-white"
+                                                className="bg-uitm-teal hover:bg-uitm-teal-dark text-white transition-all duration-200 hover:shadow-md"
                                                 onClick={() => handleViewStartup(startup)}
                                             >
-                                                View Startup
+                                                View Details
                                             </Button>
                                         </div>
                                     </div>
@@ -144,21 +139,18 @@ const InvestmentPage = () => {
 
             {/* Startup Details Dialog */}
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
-                    <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 z-10">
-                        <X className="h-5 w-5" />
+                <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto p-0">
+                    <DialogClose className="absolute right-4 top-4 rounded-full bg-background/80 backdrop-blur-sm p-1.5 opacity-70 ring-offset-background transition-opacity hover:opacity-100 z-10 border">
+                        <X className="h-4 w-4" />
                         <span className="sr-only">Close</span>
                     </DialogClose>
 
                     {selectedStartup && (
-                        <div className="space-y-4 pt-2">
-                            {/* Team Name */}
-                            <h2 className="text-xl font-bold">{selectedStartup.team}</h2>
-
+                        <div className="space-y-0">
                             {/* Media Section */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2">
                                 {/* Image */}
-                                <div className="aspect-video bg-muted rounded-lg overflow-hidden relative">
+                                <div className="aspect-video bg-muted overflow-hidden relative">
                                     <img
                                         src={selectedStartup.image}
                                         alt={selectedStartup.name}
@@ -167,42 +159,43 @@ const InvestmentPage = () => {
                                 </div>
 
                                 {/* Video Placeholder */}
-                                <div className="aspect-video bg-muted rounded-lg flex items-center justify-center relative">
-                                    <div className="absolute inset-0 bg-gray-300 flex items-center justify-center">
-                                        <div className="w-16 h-16 rounded-full bg-gray-400 flex items-center justify-center">
-                                            <Play className="h-8 w-8 text-gray-600 ml-1" />
+                                <div className="aspect-video bg-muted flex items-center justify-center relative">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
+                                        <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors">
+                                            <Play className="h-8 w-8 text-white ml-1" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Startup Details */}
-                            <div className="space-y-3">
-                                <div className="bg-muted rounded-lg p-3">
-                                    <p className="font-semibold">{selectedStartup.name}</p>
+                            <div className="p-5 sm:p-6 space-y-4">
+                                <div>
+                                    <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">Team</p>
+                                    <h2 className="text-xl font-bold tracking-tight">{selectedStartup.team}</h2>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <div className="bg-muted rounded-lg p-2">
-                                        <p className="text-sm">{selectedStartup.fullDescription}</p>
-                                    </div>
+                                <div className="bg-muted/50 rounded-lg p-4">
+                                    <p className="font-semibold text-lg mb-2">{selectedStartup.name}</p>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">{selectedStartup.fullDescription}</p>
                                 </div>
-                            </div>
 
-                            {/* Action Buttons */}
-                            <div className="flex justify-end gap-3 pt-4">
-                                <Button
-                                    className="bg-uitm-teal hover:bg-uitm-teal-dark text-white"
-                                    onClick={() => setIsDialogOpen(false)}
-                                >
-                                    Offer Mentorship
-                                </Button>
-                                <Button
-                                    className="bg-blue-600 hover:bg-blue-700 text-white"
-                                    onClick={() => setIsDialogOpen(false)}
-                                >
-                                    Propose Investment
-                                </Button>
+                                {/* Action Buttons */}
+                                <div className="flex flex-col sm:flex-row justify-end gap-3 pt-2">
+                                    <Button
+                                        variant="outline"
+                                        className="border-uitm-teal text-uitm-teal hover:bg-uitm-teal/10"
+                                        onClick={() => setIsDialogOpen(false)}
+                                    >
+                                        Offer Mentorship
+                                    </Button>
+                                    <Button
+                                        className="bg-uitm-teal hover:bg-uitm-teal-dark text-white"
+                                        onClick={() => setIsDialogOpen(false)}
+                                    >
+                                        Propose Investment
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     )}

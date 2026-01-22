@@ -188,23 +188,31 @@ export default function Dashboard() {
     }
 
     return (
-        <div className="p-4 space-y-4">
+        <div className="p-4 sm:p-6 space-y-6">
+            {/* Page Header */}
+            <div className="space-y-1">
+                <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+                <p className="text-sm text-muted-foreground">Overview of your platform's key metrics and pending actions.</p>
+            </div>
+
             {/* Stats Cards Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {statsData.map((stat, index) => {
                     const Icon = stat.icon
                     return (
-                        <Card key={index} className="bg-muted/50 hover:bg-muted/70 transition-colors cursor-pointer">
-                            <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <Card key={index} className="bg-card hover:bg-muted/50 transition-all duration-200 hover:shadow-md cursor-pointer border">
+                            <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                                 <CardTitle className="text-sm font-medium text-muted-foreground">
                                     {stat.title}
                                 </CardTitle>
-                                <Icon className={`h-5 w-5 ${stat.color}`} />
+                                <div className="h-9 w-9 rounded-lg bg-muted flex items-center justify-center">
+                                    <Icon className="h-5 w-5 text-foreground" />
+                                </div>
                             </CardHeader>
                             <CardContent>
-                                <div className="flex items-center justify-between">
-                                    <p className="text-3xl font-bold">{stat.value.toLocaleString()}</p>
-                                    <div className={`flex items-center gap-1 text-sm ${stat.trendUp ? 'text-green-500' : 'text-red-500'}`}>
+                                <div className="flex items-end justify-between">
+                                    <p className="text-3xl font-bold tracking-tight">{stat.value.toLocaleString()}</p>
+                                    <div className={`flex items-center gap-1 text-sm font-medium ${stat.trendUp ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
                                         {stat.trendUp ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
                                         <span>{stat.trend}</span>
                                     </div>
@@ -216,12 +224,14 @@ export default function Dashboard() {
             </div>
 
             {/* Bottom Row: Pie Chart and Pending Verification */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
                 {/* Pie Chart */}
-                <Card className="lg:col-span-2 bg-muted/50">
+                <Card className="lg:col-span-2 border">
                     <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                            <Users className="h-4 w-4" />
+                        <CardTitle className="text-base font-semibold flex items-center gap-2">
+                            <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center">
+                                <Users className="h-4 w-4" />
+                            </div>
                             User Distribution
                         </CardTitle>
                     </CardHeader>
@@ -257,14 +267,16 @@ export default function Dashboard() {
                 </Card>
 
                 {/* Pending Verification List */}
-                <Card className="bg-muted/50">
+                <Card className="border">
                     <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground flex items-center justify-between">
+                        <CardTitle className="text-base font-semibold flex items-center justify-between">
                             <span className="flex items-center gap-2">
-                                <Clock className="h-4 w-4" />
+                                <div className="h-8 w-8 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                                    <Clock className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                                </div>
                                 Pending Verification
                             </span>
-                            <Badge variant="secondary">{verifications.length}</Badge>
+                            <Badge variant="secondary" className="font-semibold">{verifications.length}</Badge>
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="p-0">
