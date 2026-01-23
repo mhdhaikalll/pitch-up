@@ -39,10 +39,10 @@ import {
 } from "lucide-react"
 
 const studentData = {
-    name: "Sarah Johnson",
-    email: "sarah.johnson@stanford.edu",
+    name: "Bob Johnson",
+    email: "bobjohnson@email.com",
     phone: "+1 (555) 123-4567",
-    avatar: "https://i.pravatar.cc/150?img=1",
+    avatar: "https://i.pravatar.cc/150?img=3",
     university: "Stanford University",
     location: "Stanford, California",
     course: "Bachelor of Science in Computer Science",
@@ -66,11 +66,11 @@ const studentData = {
         teamMembers: [
             {
                 id: 1,
-                name: "Sarah Johnson",
+                name: "Bob Johnson",
                 role: "Co-Founder & CEO",
-                avatar: "https://i.pravatar.cc/150?img=1",
-                email: "sarah.johnson@stanford.edu",
-                linkedin: "linkedin.com/in/sarahjohnson",
+                avatar: "https://i.pravatar.cc/150?img=3",
+                email: "bobjohnson@email.com",
+                linkedin: "linkedin.com/in/bobjohnson",
                 bio: "Computer Science student with a passion for AI and entrepreneurship."
             },
             {
