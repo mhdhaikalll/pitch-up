@@ -183,11 +183,11 @@ export default function RegisterPage() {
                                 />
                                 <Label htmlFor="terms" className="text-sm font-normal cursor-pointer leading-relaxed text-muted-foreground">
                                     I agree to the{" "}
-                                    <Link href="/terms" className="text-uitm-teal hover:text-uitm-teal-dark font-medium transition-colors">
+                                    <Link href="#" className="text-uitm-teal hover:text-uitm-teal-dark font-medium transition-colors">
                                         Terms of Service
                                     </Link>
                                     {" "}and{" "}
-                                    <Link href="/privacy" className="text-uitm-teal hover:text-uitm-teal-dark font-medium transition-colors">
+                                    <Link href="#" className="text-uitm-teal hover:text-uitm-teal-dark font-medium transition-colors">
                                         Privacy Policy
                                     </Link>
                                 </Label>
